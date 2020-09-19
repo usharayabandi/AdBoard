@@ -20,7 +20,10 @@ module AdBoardTest
           puts "type: #{ad[:ad_type]} \nsize: #{ad[:ad_size].join(' X ')}\nPrice: #{ad[:ad_price]}\nExpires on: #{expires_on}"
           puts "#################################"
         else
+
           @ad_board.slice!(@ad_board.index(ad))
+          @board_size_remaining_n = @board_size_remaining_n - ad[:ad_size].first
+          @board_size_remaining_m = @board_size_remaining_m - ad[:ad_size].last
           # @ad_board.delete(ad)
         end
       end
@@ -41,6 +44,7 @@ module AdBoardTest
     end
 
     def add_new_ad(type, expires_in, n=1, m=1)
+      show_ad_board
       price = fetch_ad_price(type)
       if n>0 && m>0
         if check_board_size(n, m, price)
